@@ -4,19 +4,11 @@
   --color-brand-pink-500: #ec4899;
   --color-brand-pink-600: #db2777;
   --color-brand-pink-700: #be185d;
-  --color-accent-500: #eab308;
-  
-  /* Agregamos las animaciones que tenías en el <style> */
-  @keyframes float {
-    0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-8px); }
+}
+
+/* Esto asegura que Tailwind se aplique a todo el cuerpo */
+@layer base {
+  body {
+    @apply bg-white dark:bg-neutral-900 transition-colors;
   }
-}
-
-.floating-button {
-  animation: float 3s ease-in-out infinite;
-}
-
-.hero-gradient {
-  background: linear-gradient(135deg, #ec4899 0%, #db2777 50%, #be185d 100%);
 }
