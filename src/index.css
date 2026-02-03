@@ -1,14 +1,122 @@
 @import "tailwindcss";
 
+/* 1. DEFINICIÓN DE VARIABLES DINÁMICAS (Responden al botón) */
+:root {
+  /* Colores de Texto y Contenido */
+  --color-brand-content: #1f1f1f;
+  --color-brand-subtitles: #ec4899;
+  --color-brand-contrast: #831843;
+  --color-brand-titulo-logo:#000000;
+
+  /* Fondos y Gradientes */
+  --bg-section: linear-gradient(135deg, #fdf2f8 0%, #fce7f3 50%, #fafafa 100%);
+  --bg-section-2: linear-gradient(135deg, #ffffff 0%, #faf1f6 50%, #fafafa 100%);
+  --bg-testimonios: linear-gradient(135deg, #fdf2f8 0%, #f5e5ed 50%, #fafafa 100%);
+  --bg-cards: linear-gradient(135deg, #fdf2f8 0%, #f5e5ed 50%, #fafafa 100%);
+  --bg-pink-box: #fdf2f8;
+}
+
+/* CAMBIOS CUANDO SE ACTIVA LA CLASE .DARK */
+.dark {
+  --color-brand-content: #a3a3a3;
+  --color-brand-subtitles: #fbcfe8;
+  --color-brand-contrast: #fbcfe8;
+  --color-brand-titulo-logo: #ffffff; 
+  
+  --bg-section: linear-gradient(135deg, #1a1a1a 0%, #262626 50%, #404040 100%);
+  --bg-section-2: linear-gradient(135deg, #292727 0%, #312f2f 50%, #404040 100%);
+  --bg-testimonios: linear-gradient(135deg, #1a1a1a 0%, #212121 50%, #262626 100%);
+  --bg-pink-box: #262626;
+}
+
+/* 2. CONFIGURACIÓN DEL TEMA DE TAILWIND */
 @theme {
+  /* Mapeo de variables dinámicas para usar como clases de Tailwind */
+  --color-brand-content: var(--color-brand-content);
+  --color-brand-subtitles: var(--color-brand-subtitles);
+  --color-brand-contrast: var(--color-brand-contrast);
+  --color-brand-titulo-logo: var(--color-brand-titulo-logo);
+
+  /* Paleta rosa fija */
+  --color-brand-pink-50: #fdf2f8;
+  --color-brand-pink-100: #fce7f3;
+  --color-brand-pink-200: #fbcfe8;
+  --color-brand-pink-300: #f9a8d4;
+  --color-brand-pink-400: #f472b6;
   --color-brand-pink-500: #ec4899;
   --color-brand-pink-600: #db2777;
   --color-brand-pink-700: #be185d;
+  --color-brand-pink-800: #9d174d;
+  --color-brand-pink-900: #831843;
+
+  /* Colores neutrales */
+  --color-neutral-50: #fafafa;
+  --color-neutral-100: #f5f5f5;
+  --color-neutral-200: #e5e5e5;
+  --color-neutral-300: #d4d4d4;
+  --color-neutral-400: #a3a3a3;
+  --color-neutral-500: #737373;
+  --color-neutral-600: #525252;
+  --color-neutral-700: #404040;
+  --color-neutral-800: #262626;
+  --color-neutral-900: #171717;
+
+  /* Acentos */
+  --color-accent-50: #fefce8;
+  --color-accent-100: #fef9c3;
+  --color-accent-500: #eab308;
+  --color-accent-600: #ca8a04;
+
+  --font-family-custom: 'Inter', 'Helvetica', 'Arial', 'sans-serif';
 }
 
-/* Esto asegura que Tailwind se aplique a todo el cuerpo */
-@layer base {
-  body {
-    @apply bg-white dark:bg-neutral-900 transition-colors;
-  }
+/* 3. UTILIDADES PERSONALIZADAS COMPLEJAS */
+
+/* Gradientes que usan las variables dinámicas */
+.hero-gradient {
+  background: linear-gradient(135deg, #ec4899 0%, #db2777 50%, #be185d 100%);
 }
+
+.section-gradient {
+  background: var(--bg-section);
+}
+
+.section-gradient-2 {
+  background: var(--bg-section-2);
+}
+
+.section-testimonios {
+  background: var(--bg-testimonios);
+}
+
+.bg-pink-50 {
+  background-color: var(--bg-pink-box);
+}
+
+/* Animaciones y Efectos */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+}
+
+.floating-button {
+  animation: float 3s ease-in-out infinite;
+}
+
+.product-card {
+  transition: transform 0.3s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+}
+
+/* Transiciones Globales suaves */
+* {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Variantes Responsive */
+@custom-variant mobile (@media (width < 768px));
+@custom-variant desktop (@media (width >= 768px));
+

@@ -1,48 +1,62 @@
-import { useState, useEffect } from 'react';
-import Navbar from './components/Navbar';
-import Hero from './components/Hero';
-import Features from './components/Features';
-import ProductCard from './components/ProductCard';
-import VotingSystem from './components/VotingSystem';
-import Toast from './components/Toast'; // Importamos el Toast
-import Footer from './components/Footer';
-import { fetchProducts } from './services/api';
-import './index.css'
+import { useState, useEffect } from 'react'
+import Header from './components/Header'
+import Hero from './components/Hero'
+import Features from './components/Features'
+import Products from './components/Products'
+import About from './components/About'
+import Testimonials from './components/Testimonials'
+import Voting from './components/Voting'
+import Contact from './components/Contact'
+import Footer from './components/Footer'
+import ThemeToggle from './components/ThemeToggle'
+import WhatsAppButton from './components/WhatsAppButton'
 
 function App() {
-  const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
+  // Estado inicial: leer de localStorage o preferencia del sistema
+  const [darkMode, setDarkMode] = useState(() => {
+    if (typeof window !== 'undefined') {
+      const savedTheme = localStorage.getItem('theme')
+      if (savedTheme === 'dark') return true
+      if (savedTheme === 'light') return false
+      
+      // Si no hay preferencia guardada, usar la del sistema
+      return window.matchMedia('(prefers-color-scheme: dark)').matches
+    }
+    return false // Por defecto: claro
+  })
 
+  // Aplicar/remover clase dark en el HTML
   useEffect(() => {
-    fetchProducts().then(res => {
-      if (res.success) setProducts(res.body);
-      setLoading(false);
-    });
-  }, []);
+    const root = document.documentElement
+    
+    if (darkMode) {
+      root.classList.add('dark')
+      localStorage.setItem('theme', 'dark')
+    } else {
+      root.classList.remove('dark')
+      localStorage.setItem('theme', 'light')
+    }
+  }, [darkMode])
+
+  const toggleTheme = () => {
+    setDarkMode(!darkMode)
+  }
 
   return (
-    <div className="min-h-screen bg-white dark:bg-neutral-900 transition-colors duration-300">
-      <Navbar />
+    <div className="bg-white dark:bg-neutral-900 font-custom text-neutral-800 dark:text-neutral-200 min-h-screen">
+      <ThemeToggle darkMode={darkMode} toggleTheme={toggleTheme} />
+      <Header />
       <Hero />
       <Features />
-      
-      <main className="container mx-auto py-16 px-4">
-        <h2 className="text-3xl font-bold text-center mb-12 text-brand-pink-600">Nuestro Catálogo</h2>
-        {loading ? (
-          <p className="text-center">Cargando...</p>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
-            {products.map(p => <ProductCard key={p.id} product={p} />)}
-          </div>
-        )}
-
-        <VotingSystem />
-      </main>
-
-      <Toast /> {/* El Toast aparecerá solo después de 3 segundos */}
+      <Products />
+      <About />
+      <Testimonials />
+      <Voting />
+      <Contact />
       <Footer />
+      <WhatsAppButton />
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
