@@ -55,13 +55,13 @@ const Testimonials = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 md:gap-8">
           {testimonials.map((testimonial, index) => (
-            <div key={index} className="bg-white dark:bg-neutral-800 p-5 sm:p-6 rounded-xl shadow-md">
+            <div key={index} className="bg-brand-box p-5 sm:p-6 rounded-xl shadow-md">
               <div className="flex items-center mb-3 sm:mb-4">
-                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-brand-pink-100 dark:bg-neutral-700 flex items-center justify-center text-brand-pink-500 dark:text-neutral-200 font-bold mr-3 sm:mr-4">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-brand-ckeck-2 flex items-center justify-center text-brand-subtitles font-bold mr-3 sm:mr-4">
                   {testimonial.initial}
                 </div>
                 <div>
-                  <h4 className="font-bold text-brand-pink-500 dark:text-brand-pink-100 text-sm sm:text-base">
+                  <h4 className="font-bold text-brand-subtitles text-sm sm:text-base">
                     {testimonial.name}
                   </h4>
                   <div className="flex text-yellow-400 text-sm">
@@ -69,7 +69,7 @@ const Testimonials = () => {
                   </div>
                 </div>
               </div>
-              <p className="text-gray-700 dark:text-gray-300 text-sm sm:text-base">
+              <p className="text-brand-content text-sm sm:text-base">
                 {testimonial.text}
               </p>
             </div>

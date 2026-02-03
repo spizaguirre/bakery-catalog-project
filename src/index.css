@@ -3,14 +3,22 @@
 /* 1. DEFINICIÓN DE VARIABLES DINÁMICAS (Responden al botón) */
 :root {
   /* Colores de Texto y Contenido */
-  --color-brand-content: #1f1f1f;
-  --color-brand-subtitles: #ec4899;
-  --color-brand-contrast: #831843;
-  --color-brand-titulo-logo:#000000;
+  --color-brand-content: #1f1f1f; /*dark gray light gray*/
+  --color-brand-subtitles: #ec4899; /*brand pink 500 brand-pink-200*/
+  --color-brand-contrast: #831843; /*brand pink 900 brand pink 200*/
+  --color-brand-titulo-logo:#000000; /*black white*/
+  --color-brand-subtitles-2:#ec4899;/*brand pink 500 bg white*/
+  --color-brand-ckeck:#ec4899;
+  --color-brand-box:#ffffff;
+  --color-brand-ckeck-2:#fbcfe8; /*brand pink 200 white*/
+  --color-brand-box-2:#f5f5f5; /*bg neutral 50 bg neutral 700*/
+  --color-brand-ckeck-3:#fce7f3; /*brand pink 100 white*/
+  
 
   /* Fondos y Gradientes */
   --bg-section: linear-gradient(135deg, #fdf2f8 0%, #fce7f3 50%, #fafafa 100%);
-  --bg-section-2: linear-gradient(135deg, #ffffff 0%, #faf1f6 50%, #fafafa 100%);
+  --bg-section-2: linear-gradient(135deg, #f8deed 0%, #f8deed 50%, #f1ddeb 100%);
+  --bg-section-3: linear-gradient(135deg, #ffffff 0%, #ffffff 50%, #ffffff 100%);
   --bg-testimonios: linear-gradient(135deg, #fdf2f8 0%, #f5e5ed 50%, #fafafa 100%);
   --bg-cards: linear-gradient(135deg, #fdf2f8 0%, #f5e5ed 50%, #fafafa 100%);
   --bg-pink-box: #fdf2f8;
@@ -18,13 +26,20 @@
 
 /* CAMBIOS CUANDO SE ACTIVA LA CLASE .DARK */
 .dark {
-  --color-brand-content: #a3a3a3;
+  --color-brand-content: #e6e6e6;
   --color-brand-subtitles: #fbcfe8;
   --color-brand-contrast: #fbcfe8;
-  --color-brand-titulo-logo: #ffffff; 
+  --color-brand-titulo-logo: #ffffff;
+  --color-brand-subtitles-2:#ffffff;
+  --color-brand-ckeck:#f9a8d4;
+  --color-brand-box:#3f3f3f;
+  --color-brand-ckeck-2:#302f2f; 
+  --color-brand-box-2:#404040;
+  --color-brand-ckeck-3:#831843;
   
   --bg-section: linear-gradient(135deg, #1a1a1a 0%, #262626 50%, #404040 100%);
   --bg-section-2: linear-gradient(135deg, #292727 0%, #312f2f 50%, #404040 100%);
+  --bg-section-3: linear-gradient(135deg, #262626 0%, #262626 50%, #262626 100%);
   --bg-testimonios: linear-gradient(135deg, #1a1a1a 0%, #212121 50%, #262626 100%);
   --bg-pink-box: #262626;
 }
@@ -36,6 +51,12 @@
   --color-brand-subtitles: var(--color-brand-subtitles);
   --color-brand-contrast: var(--color-brand-contrast);
   --color-brand-titulo-logo: var(--color-brand-titulo-logo);
+  --color-brand-ckeck: var(--color-brand-ckeck);
+  --color-brand-subtitles-2: var(--color-brand-subtitles-2);
+  --color-brand-box: var(--color-brand-box);
+  --color-brand-ckeck-2: var(--color-brand-ckeck-2);
+  --color-brand-box-2: var(--color-brand-box-2);
+  --color-brand-ckeck-3: var(--color-brand-ckeck-3);
 
   /* Paleta rosa fija */
   --color-brand-pink-50: #fdf2f8;
@@ -83,6 +104,10 @@
 
 .section-gradient-2 {
   background: var(--bg-section-2);
+}
+
+.section-gradient-3 {
+  background: var(--bg-section-3);
 }
 
 .section-testimonios {

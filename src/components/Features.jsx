@@ -18,7 +18,7 @@ const Features = () => {
   ];
 
   return (
-    <section className="py-12 sm:py-16 section-gradient-2">
+    <section className="py-12 sm:py-16 section-gradient-3">
       <div className="container mx-auto px-4 sm:px-6">
         <h2 className="text-2xl sm:text-3xl font-bold text-center text-brand-titulo-logo mb-8 sm:mb-12">
           ¿Por Qué Elegirnos?
@@ -27,15 +27,15 @@ const Features = () => {
           {features.map((feature, index) => (
             <div
               key={index}
-              className="bg-neutral-50 dark:bg-neutral-700 rounded-xl p-5 sm:p-6 hover:shadow-lg transition text-center border border-neutral-200 dark:border-neutral-600"
+              className="bg-brand-box-2 rounded-xl p-5 sm:p-6 hover:shadow-lg transition text-center border border-neutral-200 dark:border-neutral-600"
             >
-              <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-brand-pink-100 dark:bg-brand-pink-900 text-brand-pink-500 flex items-center justify-center mx-auto mb-3 sm:mb-4 shadow-md">
+              <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-brand-ckeck-3 text-brand-pink-500 flex items-center justify-center mx-auto mb-3 sm:mb-4 shadow-md">
                 <i className={`fas ${feature.icon} text-xl sm:text-2xl`}></i>
               </div>
-              <h3 className="text-lg sm:text-xl font-bold mb-2 text-neutral-800 dark:text-white">
+              <h3 className="text-lg sm:text-xl font-bold mb-2 text-brand-titulo-logo">
                 {feature.title}
               </h3>
-              <p className="text-neutral-600 dark:text-neutral-300 text-sm sm:text-base">
+              <p className="text-brand-content text-sm sm:text-base">
                 {feature.description}
               </p>
             </div>
