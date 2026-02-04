@@ -1,176 +1,201 @@
-import { useState } from 'react'
+// src/components/Products.jsx - VERSIÓN CORREGIDA
+import { useState, useEffect } from 'react';
+import { db } from '../../firebase/config';
+import { collection, getDocs, query, orderBy } from 'firebase/firestore';
 
 const Products = () => {
-  const [selectedCategory, setSelectedCategory] = useState('all')
+  const [productos, setProductos] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [categoriaActiva, setCategoriaActiva] = useState('todos');
 
-  const products = [
-    {
-      id: 1,
-      name: 'Torta Mojada de Chocolate',
-      category: 'tortas',
-      price: '$20.00',
-      description: 'Deliciosa torta de chocolate con relleno cremoso y decoración personalizada.',
-      rating: 4.9,
-      reviews: 128,
-      image: 'https://www.recetasnestle.com.ec/sites/default/files/styles/recipe_detail_desktop_new/public/srh_recipes/05b9ae1f5302940549596ce7d2d0c240.webp?itok=RgMf1CGw',
-      recipeUrl: 'https://www.recetasnestle.com.ec/recetas/torta-mojada-de-chocolate'
-    },
-    {
-      id: 2,
-      name: 'Cupcakes Decorados',
-      category: 'bocadillos',
-      price: '$4.00 c/u',
-      description: 'Esponjosos cupcakes con diferentes sabores y decoraciones creativas.',
-      rating: 4.8,
-      reviews: 95,
-      image: 'https://www.recetasnestle.com.ec/sites/default/files/styles/recipe_detail_desktop_new/public/srh_recipes/c03eaa6fb1374a728eff0bfaa3199d79.webp?itok=iEO-0YJv',
-      recipeUrl: 'https://www.recetasnestle.com.ec/recetas/cupcakes-dalmata'
-    },
-    {
-      id: 3,
-      name: 'Galletas ChocoChips',
-      category: 'bocadillos',
-      price: '$4 c/u',
-      description: 'Galletas decoradas a mano con diseños únicos para tus eventos especiales.',
-      rating: 4.9,
-      reviews: 142,
-      image: 'https://www.recetasnestle.com.ec/sites/default/files/styles/recipe_detail_desktop_new/public/srh_recipes/b7a900990bb621daf3eca0752622d9e5.webp?itok=pLjzLs9n',
-      recipeUrl: 'https://www.recetasnestle.com.ec/recetas/galletas-chocochips'
-    },
-    {
-      id: 4,
-      name: 'Brownies y Blondies',
-      category: 'bocadillos',
-      price: '$1 c/u',
-      description: 'Cuadrados de chocolate (o vainilla) húmedos y suaves, con nueces o chips de chocolate.',
-      rating: 4.9,
-      reviews: 150,
-      image: 'https://www.recetasnestle.com.ec/sites/default/files/styles/recipe_detail_desktop_new/public/srh_recipes/86e69e02d7e2e518415d0e07b5b10d0a.webp?itok=u9B0PEIL',
-      recipeUrl: 'https://www.recetasnestle.com.ec/recetas/brownies-de-chocolate'
-    },
-    {
-      id: 5,
-      name: 'Chessecake de Maracuyá',
-      category: 'postres',
-      price: '$1 c/u',
-      description: 'Suave y cremoso pastel de queso con una capa fresca de maracuyá natural.',
-      rating: 4.6,
-      reviews: 110,
-      image: 'https://www.recetasnestle.com.ec/sites/default/files/styles/recipe_detail_desktop_new/public/srh_recipes/b9e5673058f8bcc1d7853f5b20110db5.webp?itok=Ew-CiB1R',
-      recipeUrl: 'https://www.recetasnestle.com.ec/recetas/cheesecake-de-maracuya'
-    },
-    {
-      id: 6,
-      name: 'Brazo Gitano',
-      category: 'postres',
-      price: '$1 c/u',
-      description: 'Bizcocho enrollado con relleno de frutas, crema pastelera o chocolate.',
-      rating: 4.7,
-      reviews: 120,
-      image: 'https://www.recetasnestle.com.ec/sites/default/files/styles/recipe_detail_desktop_new/public/srh_recipes/e6fab8b557a1aed40840e4509966f0d9.webp?itok=pMU6HQrn',
-      recipeUrl: 'https://www.recetasnestle.com.ec/recetas/brazo-gitano-bajo-en-azucar'
-    }
-  ]
+  const categorias = [
+    { id: 'todos', nombre: 'Todos' },
+    { id: 'tortas', nombre: 'Tortas' },
+    { id: 'cupcakes', nombre: 'Cupcakes' },
+    { id: 'galletas', nombre: 'Galletas' },
+    { id: 'postres', nombre: 'Postres' },
+  ];
 
-  const filteredProducts = selectedCategory === 'all' 
-    ? products 
-    : products.filter(product => product.category === selectedCategory)
+  // Cargar productos de Firebase
+  useEffect(() => {
+    const cargarProductos = async () => {
+      try {
+        setLoading(true);
+        const productosRef = collection(db, 'productos');
+        const q = query(productosRef, orderBy('fechaCreacion', 'desc'));
+        const querySnapshot = await getDocs(q);
+        
+        const productosData = [];
+        querySnapshot.forEach((doc) => {
+          productosData.push({
+            id: doc.id,
+            ...doc.data()
+          });
+        });
+        
+        setProductos(productosData);
+      } catch (error) {
+        console.error('Error cargando productos:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  const scrollToSection = (id) => {
-    const element = document.getElementById(id)
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' })
-    }
-  }
+    cargarProductos();
+  }, []);
+
+  // Filtrar productos por categoría
+  const productosFiltrados = categoriaActiva === 'todos' 
+    ? productos 
+    : productos.filter(p => p.categoria === categoriaActiva);
 
   return (
-    <section id="products" className="py-12 sm:py-16 section-gradient">
-      <div className="container mx-auto px-4 sm:px-6">
-        <div className="text-center mb-8 sm:mb-12">
-          <h2 className="text-2xl sm:text-3xl font-bold text-brand-contrast mb-3 sm:mb-4">
-            Nuestros Productos
+    <section id="products" className="py-16 bg-gradient-to-b from-white to-gray-50 dark:from-neutral-900 dark:to-neutral-800">
+      <div className="container mx-auto px-4">
+        {/* Encabezado */}
+        <div className="text-center mb-12">
+          <h2 className="text-3xl md:text-4xl font-bold text-neutral-800 dark:text-white mb-4">
+            Nuestros <span className="text-brand-pink-500">Productos</span>
           </h2>
-          <p className="max-w-2xl mx-auto text-brand-content text-sm sm:text-base">
-            Descubre nuestra variedad de postres y tortas artesanales
+          <p className="text-lg text-neutral-600 dark:text-neutral-300 max-w-2xl mx-auto">
+            Cada creación es única, hecha con los mejores ingredientes y mucho amor
           </p>
         </div>
 
-        {/* Filtro responsive */}
-        <div className="container mx-auto mb-6 sm:mb-10">
-          <div className="max-w-4xl mx-auto mb-4 sm:mb-6">
-            <h3 className="text-lg sm:text-xl font-bold mb-3 sm:mb-4 text-center text-brand-subtitles">
-              Filtrar por Categoría
-            </h3>
-            <select
-              value={selectedCategory}
-              onChange={(e) => setSelectedCategory(e.target.value)}
-              className="w-full bg-brand-box border border-brand-border text-brand-content py-2.5 sm:py-3 px-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-pink-400 text-sm sm:text-base"
+        {/* Filtros de categoría */}
+        <div className="flex flex-wrap justify-center gap-3 mb-10">
+          {categorias.map(categoria => (
+            <button
+              key={categoria.id}
+              onClick={() => setCategoriaActiva(categoria.id)}
+              className={`px-5 py-2.5 rounded-full font-medium transition-all ${
+                categoriaActiva === categoria.id
+                  ? 'bg-gradient-to-r from-brand-pink-500 to-brand-pink-600 text-white shadow-lg'
+                  : 'bg-white dark:bg-neutral-800 text-neutral-700 dark:text-neutral-300 hover:bg-gray-50 dark:hover:bg-neutral-700'
+              }`}
             >
-              <option value="all">Todos los productos</option>
-              <option value="tortas">Tortas</option>
-              <option value="postres">Postres</option>
-              <option value="bocadillos">Bocadillos</option>
-            </select>
-          </div>
-        </div>
-
-        {/* Grid de productos responsive */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 md:gap-8">
-          {filteredProducts.map((product) => (
-            <div
-              key={product.id}
-              className="product-card bg-brand-box rounded-xl shadow-md overflow-hidden transition-all duration-300 border border-brand-border"
-            >
-              <div className="relative">
-                <img
-                  src={product.image}
-                  alt={product.name}
-                  className="w-full h-48 sm:h-52 md:h-56 object-cover rounded-t-xl"
-                />
-                <div className="absolute top-3 sm:top-4 right-3 sm:right-4 bg-brand-pink-500 text-white px-2.5 sm:px-3 py-1 rounded-full text-xs font-bold shadow">
-                  {product.price}
-                </div>
-              </div>
-              <div className="p-4 sm:p-5">
-                <h3 className="font-bold text-base sm:text-lg mb-2 text-brand-titulo-logo">
-                  {product.name}
-                </h3>
-                <p className="text-brand-content mb-3 sm:mb-4 text-sm sm:text-base">
-                  {product.description}
-                </p>
-                <div className="flex justify-between items-center">
-                  <div className="flex items-center">
-                    <i className="fas fa-star text-accent-500 mr-1 text-sm sm:text-base"></i>
-                    <span className="text-xs sm:text-sm text-brand-content">
-                      {product.rating} ({product.reviews})
-                    </span>
-                  </div>
-                  <a
-                    href={product.recipeUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-xs sm:text-sm bg-gradient-to-r from-brand-pink-500 to-brand-pink-600 text-white px-3 sm:px-4 py-1.5 sm:py-2 rounded-full font-semibold hover:shadow transition inline-block text-center"
-                  > <i className="fas fa-shopping-cart mr-2"></i>
-                    Añadir al Carrito
-                  </a>
-                </div>
-              </div>
-            </div>
+              {categoria.nombre}
+            </button>
           ))}
         </div>
 
-        {/* Botón Call to Action */}
-        <div className="text-center mt-8 sm:mt-12">
+        {/* Galería de productos */}
+        {loading ? (
+          <div className="text-center py-12">
+            <div className="inline-block animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-brand-pink-500"></div>
+            <p className="mt-4 text-neutral-600 dark:text-neutral-300">Cargando productos...</p>
+          </div>
+        ) : productosFiltrados.length === 0 ? (
+          <div className="text-center py-12 bg-white dark:bg-neutral-800 rounded-2xl shadow-lg">
+            <i className="fas fa-cookie-bite text-gray-300 dark:text-neutral-700 text-5xl mb-4"></i>
+            <h3 className="text-xl font-semibold text-gray-600 dark:text-gray-400">
+              No hay productos aún
+            </h3>
+            <p className="text-gray-500 dark:text-gray-500 mt-2">
+              Pronto agregaremos nuestras delicias
+            </p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            {productosFiltrados.map(producto => (
+              <div 
+                key={producto.id} 
+                className="bg-white dark:bg-neutral-800 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 group h-full flex flex-col"
+              >
+                {/* Imagen del producto - CON PROPORCIÓN FIJA */}
+                <div className="relative overflow-hidden bg-gray-100 dark:bg-neutral-700">
+                  {/* Contenedor con relación de aspecto 4:3 */}
+                  <div className="relative w-full pt-[75%]">
+                    {producto.fotos && producto.fotos.length > 0 ? (
+                      <img
+                        src={producto.fotos[0]?.url || '/placeholder.jpg'}
+                        alt={producto.nombre}
+                        className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        loading="lazy"
+                      />
+                    ) : (
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <i className="fas fa-cake text-gray-300 dark:text-neutral-600 text-4xl"></i>
+                      </div>
+                    )}
+                  </div>
+                  
+                  {/* Badges - POSICIONADOS SOBRE LA IMAGEN */}
+                  <div className="absolute top-3 left-3 right-3 flex flex-wrap gap-2">
+                    {producto.destacado && (
+                      <div className="bg-gradient-to-r from-yellow-500 to-orange-500 text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg">
+                        <i className="fas fa-star mr-1"></i> Destacado
+                      </div>
+                    )}
+                    {producto.nuevo && (
+                      <div className="bg-green-500 text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg">
+                        Nuevo
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                {/* Información del producto */}
+                <div className="p-6 flex-grow flex flex-col">
+                  <div className="flex justify-between items-start mb-2">
+                    <h3 className="text-xl font-bold text-neutral-800 dark:text-white line-clamp-1">
+                      {producto.nombre}
+                    </h3>
+                    <span className="text-xs px-2 py-1 bg-gray-100 dark:bg-neutral-700 text-gray-600 dark:text-gray-300 rounded-full whitespace-nowrap">
+                      {producto.categoria}
+                    </span>
+                  </div>
+
+                  <p className="text-neutral-600 dark:text-neutral-400 text-sm mb-4 line-clamp-2 flex-grow">
+                    {producto.descripcion || 'Delicioso producto artesanal'}
+                  </p>
+
+                  {/* Precio y botón */}
+                  <div className="flex justify-between items-center pt-4 border-t border-gray-100 dark:border-neutral-700">
+                    <div>
+                      <span className="text-2xl font-bold text-brand-pink-500">
+                        ${producto.precio?.toLocaleString() || '0'}
+                      </span>
+                      <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                        CLP
+                      </p>
+                    </div>
+                    <button
+                      onClick={() => {
+                        // Aquí puedes agregar lógica para pedir el producto
+                        console.log('Pedir:', producto.id);
+                      }}
+                      className="px-4 py-2 bg-gradient-to-r from-brand-pink-500 to-brand-pink-600 text-white rounded-full text-sm font-medium hover:shadow-lg transition-all hover:scale-105"
+                    >
+                      <i className="fas fa-shopping-cart mr-2"></i>
+                      Pedir
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* Botón para agregar más productos (solo visible si estás logueado) */}
+        <div className="text-center mt-12">
+          <p className="text-gray-500 dark:text-gray-400 mb-4">
+            ¿Quieres ver algo especial? <span className="text-brand-pink-500 font-medium">¡Contáctanos!</span>
+          </p>
           <button
-            onClick={() => scrollToSection('contact')}
-            className="bg-gradient-to-r from-brand-pink-500 to-brand-pink-600 text-white px-6 sm:px-8 py-2.5 sm:py-3 rounded-full font-bold hover:shadow-lg transition-all duration-300 inline-flex items-center text-sm sm:text-base"
+            onClick={() => {
+              const contactSection = document.getElementById('contact');
+              contactSection?.scrollIntoView({ behavior: 'smooth' });
+            }}
+            className="px-6 py-3 bg-gradient-to-r from-brand-pink-500 to-brand-pink-600 text-white rounded-full font-medium hover:shadow-xl transition-all"
           >
-            <i className="fas fa-list mr-2"></i>Haz tu pedido
+            <i className="fas fa-envelope mr-2"></i>
+            Solicitar Pedido Personalizado
           </button>
         </div>
       </div>
     </section>
-  )
-}
+  );
+};
 
-export default Products
+export default Products;
