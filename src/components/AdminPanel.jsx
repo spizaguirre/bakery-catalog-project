@@ -84,7 +84,7 @@ useEffect(() => {
       if (resultado.success) {
         setMensaje({
           tipo: 'exito',
-          texto: `🎉 ¡Producto "${formData.nombre}" publicado exitosamente!\n\nID: ${resultado.id}\nImágenes subidas: ${resultado.imagenes || imagenes.length}`
+          texto: ` ¡Producto "${formData.nombre}" publicado exitosamente!\n\nID: ${resultado.id}\nImágenes subidas: ${resultado.imagenes || imagenes.length}`
         });
 
         // Resetear formulario
@@ -101,10 +101,10 @@ useEffect(() => {
         setImagenes([]);
         setVistaPrevia([]);
       } else {
-        setMensaje({ tipo: 'error', texto: `❌ Error: ${resultado.message}` });
+        setMensaje({ tipo: 'error', texto: ` Error: ${resultado.message}` });
       }
     } catch (error) {
-      setMensaje({ tipo: 'error', texto: `❌ Error crítico: ${error.message}` });
+      setMensaje({ tipo: 'error', texto: ` Error crítico: ${error.message}` });
     } finally {
       setSubiendo(false);
     }
@@ -198,9 +198,9 @@ useEffect(() => {
                 onChange={handleChange}
                 required
                 min="0"
-                step="100"
+                step="1"
                 className="w-full px-4 py-3 border border-gray-300 dark:border-neutral-600 rounded-lg bg-white dark:bg-neutral-800 focus:ring-2 focus:ring-brand-pink-500 focus:border-transparent"
-                placeholder="28000"
+                placeholder="20.00"
                 disabled={subiendo}
               />
             </div>

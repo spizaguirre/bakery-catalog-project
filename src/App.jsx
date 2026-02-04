@@ -1,17 +1,19 @@
-// app.jsx - VERSIÓN CORREGIDA
+// App.jsx - VERSIÓN CON REACT ROUTER FUNCIONAL
+import { Routes, Route } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import Header from './components/Header';
 import Hero from './components/Hero';
-import Features from './components/Features';
 import Products from './components/Products';
 import About from './components/About';
-import Testimonials from './components/Testimonials';
-import Voting from './components/Voting';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import ThemeToggle from './components/ThemeToggle';
 import WhatsAppButton from './components/WhatsAppButton';
-import AdminPanel from './components/AdminPanel'; // <-- IMPORTAR AdminPanel
+
+// Componentes de administración
+import AdminPanel from './components/AdminPanel';
+import ProductosAdmin from './components/ProductosAdmin';
+import EditarProducto from './components/EditarProducto';
 
 function App() {
   const [darkMode, setDarkMode] = useState(() => {
@@ -23,8 +25,6 @@ function App() {
     }
     return false;
   });
-
-  const [showAdmin, setShowAdmin] = useState(false);
 
   useEffect(() => {
     const root = document.documentElement;
@@ -41,48 +41,82 @@ function App() {
     setDarkMode(!darkMode);
   };
 
+  // Componente de página principal
+  const HomePage = () => (
+    <>
+      <ThemeToggle darkMode={darkMode} toggleTheme={toggleTheme} />
+      <Header />
+      <Hero />
+      <Products />
+      <About />
+      <Contact />
+      <Footer />
+      <WhatsAppButton />
+      
+      {/* Botones flotantes para admin */}
+      <div className="fixed bottom-24 right-6 z-40 flex flex-col gap-3">
+        <a
+          href="/admin/nuevo"
+          className="bg-gradient-to-r from-green-500 to-emerald-600 text-white p-3 rounded-full shadow-lg hover:shadow-xl transition-all"
+          title="Agregar Producto"
+        >
+          <i className="fas fa-plus"></i>
+        </a>
+        <a
+          href="/admin/productos"
+          className="bg-gradient-to-r from-blue-500 to-blue-600 text-white p-3 rounded-full shadow-lg hover:shadow-xl transition-all"
+          title="Gestionar Productos"
+        >
+          <i className="fas fa-list"></i>
+        </a>
+      </div>
+    </>
+  );
+
+  // Componente con botón de volver
+  const AdminLayout = ({ children, backTo = "/" }) => (
+    <div className="min-h-screen bg-gray-50 dark:bg-neutral-900">
+      <a
+        href={backTo}
+        className="fixed top-6 left-6 z-50 bg-gray-800 text-white px-4 py-2 rounded-lg hover:bg-gray-900 flex items-center gap-2"
+      >
+        <i className="fas fa-arrow-left"></i>
+        Volver
+      </a>
+      {children}
+    </div>
+  );
+
   return (
     <div className="bg-white dark:bg-neutral-900 font-custom text-neutral-800 dark:text-neutral-200 min-h-screen">
-      {/* Mostrar AdminPanel o contenido normal */}
-      {showAdmin ? (
-        // PANEL ADMIN COMPLETO
-        <div className="min-h-screen bg-gray-50 dark:bg-neutral-900">
-          <button
-            onClick={() => setShowAdmin(false)}
-            className="fixed top-6 left-6 z-50 bg-gray-800 text-white px-4 py-2 rounded-lg hover:bg-gray-900 transition-colors flex items-center gap-2 shadow-lg"
-          >
-            <i className="fas fa-arrow-left"></i>
-            Volver al sitio
-          </button>
-          
-          {/* Renderizar el componente AdminPanel */}
-          <AdminPanel />
-        </div>
-      ) : (
-        // PÁGINA NORMAL
-        <>
-          <ThemeToggle darkMode={darkMode} toggleTheme={toggleTheme} />
-          <Header />
-          <Hero />
-          <Features />
-          <Products />
-          <About />
-          <Testimonials />
-          <Voting />
-          <Contact />
-          <Footer />
-          <WhatsAppButton />
-          
-          {/* Botón para mostrar admin */}
-          <button
-            onClick={() => setShowAdmin(true)}
-            className="fixed bottom-24 right-6 z-40 bg-gradient-to-r from-brand-pink-500 to-brand-pink-600 text-white p-3 rounded-full shadow-lg hover:shadow-xl transition-all"
-            title="Panel de Administración"
-          >
-            <i className="fas fa-plus text-lg"></i>
-          </button>
-        </>
-      )}
+      <Routes>
+        {/* Ruta principal */}
+        <Route path="/" element={<HomePage />} />
+        
+        {/* Crear nuevo producto */}
+        <Route path="/admin/nuevo" element={
+          <AdminLayout>
+            <AdminPanel />
+          </AdminLayout>
+        } />
+        
+        {/* Listar productos */}
+        <Route path="/admin/productos" element={
+          <AdminLayout>
+            <ProductosAdmin />
+          </AdminLayout>
+        } />
+        
+        {/* Editar producto */}
+        <Route path="/admin/editar/:id" element={
+          <AdminLayout backTo="/admin/productos">
+            <EditarProducto />
+          </AdminLayout>
+        } />
+        
+        {/* Ruta por defecto */}
+        <Route path="*" element={<HomePage />} />
+      </Routes>
     </div>
   );
 }
