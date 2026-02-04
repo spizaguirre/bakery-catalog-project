@@ -6,20 +6,26 @@
   --color-brand-content: #1f1f1f; /*dark gray light gray*/
   --color-brand-subtitles: #ec4899; /*brand pink 500 brand-pink-200*/
   --color-brand-contrast: #831843; /*brand pink 900 brand pink 200*/
-  --color-brand-titulo-logo:#000000; /*black white*/
-  --color-brand-subtitles-2:#ec4899;/*brand pink 500 bg white*/
-  --color-brand-ckeck:#ec4899;
-  --color-brand-box:#ffffff;/*white bg dark gray */
-  --color-brand-ckeck-2:#fbcfe8; /*brand pink 200 white*/
-  --color-brand-box-2:#f5f5f5; /*bg neutral 50 bg neutral 700*/
-  --color-brand-ckeck-3:#fce7f3; /*brand pink 100 white*/
-  --color-brand-border:#cac8c9;
+  --color-brand-titulo-logo: #000000; /*black white*/
+  --color-brand-subtitles-2: #ec4899;/*brand pink 500 bg white*/
+  --color-brand-ckeck: #ec4899;/*brand pink 500 brand pink 300*/
+  --color-brand-box: #ffffff;/*white bg dark gray */
+  --color-brand-ckeck-2: #fbcfe8; /*brand pink 200 white*/
+  --color-brand-box-2: #f5f5f5; /*bg neutral 50 bg neutral 700*/
+  --color-brand-box-3: #fcf5f9; /*light pink dark gray*/
+  --color-brand-ckeck-3: #fce7f3; /*brand pink 100 white*/
+  --color-brand-border: #cac8c9; /*neutral 300 neutral 600*/
+  --color-brand-footer: #ec4899; /*brand pink 500 black*/ 
+  --color-brand-footer-2: #ffffff; /*white brand pink 500*/
 
   /* Fondos y Gradientes */
   --bg-section: linear-gradient(135deg, #fdf2f8 0%, #fce7f3 50%, #fafafa 100%);
   --bg-section-2: linear-gradient(135deg, #f8deed 0%, #f8deed 50%, #f1ddeb 100%);
   --bg-section-3: linear-gradient(135deg, #ffffff 0%, #ffffff 50%, #ffffff 100%);
+  --bg-section-4: linear-gradient(135deg, #fef8fb 0%, #fcecf5 50%, #eadbe5 100%);
+  --bg-footer: linear-gradient(135deg, #f8deed 0%, #f8deed 50%, #f1ddeb 100%);
   --bg-testimonios: linear-gradient(135deg, #fdf2f8 0%, #f5e5ed 50%, #fafafa 100%);
+  --bg-contact: linear-gradient(135deg, #ffffff 0%, #ffffff 50%, #ffffff 100%);
   --bg-cards: linear-gradient(135deg, #fdf2f8 0%, #f5e5ed 50%, #fafafa 100%);
   --bg-pink-box: #fdf2f8;
 }
@@ -37,10 +43,16 @@
   --color-brand-box-2:#404040;
   --color-brand-ckeck-3:#831843;
   --color-brand-border:#525252;
+  --color-brand-footer: #262626;
+  --color-brand-footer-2: #f472b6;
+  --color-brand-box-3: #474747; 
   
   --bg-section: linear-gradient(135deg, #1a1a1a 0%, #262626 50%, #404040 100%);
   --bg-section-2: linear-gradient(135deg, #292727 0%, #312f2f 50%, #404040 100%);
   --bg-section-3: linear-gradient(135deg, #262626 0%, #262626 50%, #262626 100%);
+  --bg-section-4: linear-gradient(135deg, #1a1a1a 0%, #1a1a1a 50%, #232223 100%);
+  --bg-section-3: linear-gradient(135deg, #262626 0%, #262626 50%, #262626 100%);
+  --bg-footer: linear-gradient(135deg, #3e3e3e 0%, #404040 50%, #3e3e3e 100%);
   --bg-testimonios: linear-gradient(135deg, #1a1a1a 0%, #212121 50%, #262626 100%);
   --bg-pink-box: #262626;
 }
@@ -58,6 +70,10 @@
   --color-brand-box-2: var(--color-brand-box-2);
   --color-brand-ckeck-3: var(--color-brand-ckeck-3);
   --color-brand-border: var(--color-brand-border);
+  --color-brand-footer: var(--color-brand-footer);
+  --color-brand-footer-2: var(--color-brand-footer-2);
+  --color-brand-box-3: var(--color-brand-box-3);
+
 
   /* Paleta rosa fija */
   --color-brand-pink-50: #fdf2f8;
@@ -77,7 +93,7 @@
   --color-neutral-200: #e5e5e5;
   --color-neutral-300: #d4d4d4;
   --color-neutral-400: #a3a3a3;
-  --color-neutral-500: #737373;
+  --color-neutral-500: #737373;/*gray*/
   --color-neutral-600: #525252;
   --color-neutral-700: #404040;
   --color-neutral-800: #262626;
@@ -108,7 +124,15 @@
 }
 
 .section-gradient-3 {
-  background: var(--bg-section-3);
+  background: var(--bg-section-3);/*white black*/
+}
+
+.section-gradient-4 {
+  background: var(--bg-section-4);
+}
+
+.section-footer {
+  background: var(--bg-footer);
 }
 
 .section-testimonios {

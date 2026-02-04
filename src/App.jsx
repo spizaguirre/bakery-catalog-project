@@ -9,6 +9,7 @@ import Contact from './components/Contact';
 import Footer from './components/Footer';
 import ThemeToggle from './components/ThemeToggle';
 import WhatsAppButton from './components/WhatsAppButton';
+import Features from './components/Features';
 
 // Componentes de administración
 import AdminPanel from './components/AdminPanel';
@@ -47,6 +48,7 @@ function App() {
       <ThemeToggle darkMode={darkMode} toggleTheme={toggleTheme} />
       <Header />
       <Hero />
+      <Features />
       <Products />
       <About />
       <Contact />

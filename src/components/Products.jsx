@@ -50,14 +50,15 @@ const Products = () => {
     : productos.filter(p => p.categoria === categoriaActiva);
 
   return (
-    <section id="products" className="py-16 bg-gradient-to-b from-white to-gray-50 dark:from-neutral-900 dark:to-neutral-800">
+    /*quiero que la seccion tenga fondo blanco en modo claro y neutral-800 en modo oscuro*/
+    <section id="products" className="py-16 section-gradient-4">
       <div className="container mx-auto px-4">
         {/* Encabezado */}
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-neutral-800 dark:text-white mb-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-brand-titulo-logo mb-4">
             Nuestros <span className="text-brand-pink-500">Productos</span>
           </h2>
-          <p className="text-lg text-neutral-600 dark:text-neutral-300 max-w-2xl mx-auto">
+          <p className="text-brand-content max-w-2xl mx-auto">
             Cada creación es única, hecha con los mejores ingredientes y mucho amor
           </p>
         </div>
