@@ -27,7 +27,7 @@ const Features = () => {
           {features.map((feature, index) => (
             <div
               key={index}
-              className="bg-brand-box-2 rounded-xl p-5 sm:p-6 hover:shadow-lg transition text-center border border-neutral-200 dark:border-neutral-600"
+              className="bg-brand-box-2 rounded-xl p-5 sm:p-6 hover:shadow-lg transition text-center border border-brand-border"
             >
               <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-brand-ckeck-3 text-brand-pink-500 flex items-center justify-center mx-auto mb-3 sm:mb-4 shadow-md">
                 <i className={`fas ${feature.icon} text-xl sm:text-2xl`}></i>

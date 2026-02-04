@@ -1,127 +1,33 @@
 import { useState, useEffect } from 'react';
 
-const Navbar = () => {
+const Navbar = ({ children }) => {
   const [darkMode, setDarkMode] = useState(false);
 
   useEffect(() => {
-  // Al cargar, revisar si ya había una preferencia guardada
-  const savedMode = localStorage.getItem('theme') === 'dark';
-  if (savedMode) setDarkMode(true);
-}, []);
+    // Al cargar, revisar si ya había una preferencia guardada
+    const savedMode = localStorage.getItem('theme') === 'dark';
+    if (savedMode) setDarkMode(true);
+  }, []);
 
-useEffect(() => {
-  if (darkMode) {
-    document.documentElement.classList.add('dark');
-    localStorage.setItem('theme', 'dark');
-  } else {
-    document.documentElement.classList.remove('dark');
-    localStorage.setItem('theme', 'light');
-  }
-}, [darkMode]);
-
-
-const Header = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
-
-  const navItems = [
-    { id: 'products', label: 'Productos' },
-    { id: 'about', label: 'Nosotros' },
-    { id: 'testimonials', label: 'Testimonios' },
-    { id: 'contact', label: 'Contacto' },
-  ]
-
-  const scrollToSection = (id) => {
-    const element = document.getElementById(id)
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' })
-      setIsMenuOpen(false)
+  useEffect(() => {
+    if (darkMode) {
+      document.documentElement.classList.add('dark');
+      localStorage.setItem('theme', 'dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+      localStorage.setItem('theme', 'light');
     }
-  }
+  }, [darkMode]);
 
   return (
-    <header className="bg-white dark:bg-neutral-800 shadow-sm sticky top-0 z-40 border-b border-neutral-200 dark:border-neutral-700">
-      <div className="container mx-auto px-4 py-3 flex justify-between items-center">
-        {/* Logo y nombre */}
-        <div className="flex items-center space-x-3 flex-shrink-0">
-          <div className="w-10 h-10 rounded-full bg-gradient-to-r from-brand-pink-500 to-brand-pink-600 flex items-center justify-center shadow-md">
-            <i className="fas fa-cupcake text-white text-lg"></i>
-          </div>
-          <div>
-            <h1 className="text-xl font-bold text-neutral-800 dark:text-white">
-              Horneando<span className="text-brand-pink-500"> con Amor</span>
-            </h1>
-            <p className="text-xs text-neutral-500 dark:text-neutral-400">Repostería Artesanal</p>
-          </div>
-        </div>
+    <nav>
+      {/* Botón para cambiar modo oscuro/claro si lo necesitas */}
+      {/* <button onClick={() => setDarkMode(!darkMode)}>
+        {darkMode ? 'Modo Claro' : 'Modo Oscuro'}
+      </button> */}
+      {children}
+    </nav>
+  );
+};
 
-        {/* Navegación para desktop - OCULTA POR AHORA PARA SOLUCIONAR ESPACIO */}
-        <nav className="hidden lg:flex items-center space-x-6">
-          {navItems.map((item) => (
-            <button
-              key={item.id}
-              onClick={() => scrollToSection(item.id)}
-              className="text-neutral-700 dark:text-neutral-300 hover:text-brand-pink-500 dark:hover:text-brand-pink-300 transition-colors font-medium whitespace-nowrap"
-            >
-              {item.label}
-            </button>
-          ))}
-          
-          {/* Botón de pedido - VISIBLE SOLO EN DESKTOP */}
-          <button
-            onClick={() => scrollToSection('contact')}
-            className="ml-4 px-4 py-2 bg-gradient-to-r from-brand-pink-500 to-brand-pink-600 text-white rounded-full text-sm hover:shadow-lg transition-all font-medium whitespace-nowrap"
-          >
-            <i className="fas fa-shopping-cart mr-2"></i>Hacer Pedido
-          </button>
-        </nav>
-
-        {/* Menú móvil y botón de pedido móvil */}
-        <div className="flex items-center space-x-4">
-          {/* Botón de pedido para móvil/tablet */}
-          <button
-            onClick={() => scrollToSection('contact')}
-            className="lg:hidden px-3 py-2 bg-gradient-to-r from-brand-pink-500 to-brand-pink-600 text-white rounded-full text-xs hover:shadow-lg transition-all font-medium whitespace-nowrap"
-          >
-            <i className="fas fa-shopping-cart mr-1"></i>Pedido
-          </button>
-          
-          {/* Botón del menú hamburguesa */}
-          <button
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="text-neutral-700 dark:text-neutral-300 p-2 lg:hidden"
-            aria-label="Menú"
-          >
-            <i className={`fas ${isMenuOpen ? 'fa-times' : 'fa-bars'} text-xl`}></i>
-          </button>
-        </div>
-      </div>
-
-      {/* Menú móvil desplegable */}
-      {isMenuOpen && (
-        <div className="lg:hidden bg-white dark:bg-neutral-800 py-4 px-6 shadow-lg border-t border-neutral-200 dark:border-neutral-700">
-          <div className="flex flex-col space-y-4">
-            {navItems.map((item) => (
-              <button
-                key={item.id}
-                onClick={() => scrollToSection(item.id)}
-                className="text-neutral-700 dark:text-neutral-300 hover:text-brand-pink-500 dark:hover:text-brand-pink-300 transition-colors font-medium py-3 text-left text-lg border-b border-neutral-100 dark:border-neutral-700 last:border-b-0"
-              >
-                {item.label}
-              </button>
-            ))}
-            
-            {/* Botón de pedido en menú móvil */}
-            <button
-              onClick={() => scrollToSection('contact')}
-              className="mt-4 bg-gradient-to-r from-brand-pink-500 to-brand-pink-600 text-white font-bold py-3 rounded-lg hover:shadow-lg transition text-center"
-            >
-              <i className="fas fa-shopping-cart mr-2"></i>Hacer Pedido
-            </button>
-          </div>
-        </div>
-      )}
-    </header>
-  )
-}
-
-export default Header
+export default Navbar;

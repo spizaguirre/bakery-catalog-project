@@ -104,7 +104,7 @@ const Products = () => {
             <select
               value={selectedCategory}
               onChange={(e) => setSelectedCategory(e.target.value)}
-              className="w-full bg-white dark:bg-neutral-700 border border-gray-300 dark:border-neutral-600 text-gray-700 dark:text-gray-200 py-2.5 sm:py-3 px-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-pink-400 text-sm sm:text-base"
+              className="w-full bg-brand-box border border-brand-border text-brand-content py-2.5 sm:py-3 px-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-pink-400 text-sm sm:text-base"
             >
               <option value="all">Todos los productos</option>
               <option value="tortas">Tortas</option>
@@ -119,7 +119,7 @@ const Products = () => {
           {filteredProducts.map((product) => (
             <div
               key={product.id}
-              className="product-card bg-white dark:bg-neutral-800 rounded-xl shadow-md overflow-hidden transition-all duration-300 border border-neutral-200 dark:border-neutral-700"
+              className="product-card bg-brand-box rounded-xl shadow-md overflow-hidden transition-all duration-300 border border-brand-border"
             >
               <div className="relative">
                 <img
@@ -132,16 +132,16 @@ const Products = () => {
                 </div>
               </div>
               <div className="p-4 sm:p-5">
-                <h3 className="font-bold text-base sm:text-lg mb-2 text-neutral-800 dark:text-white">
+                <h3 className="font-bold text-base sm:text-lg mb-2 text-brand-titulo-logo">
                   {product.name}
                 </h3>
-                <p className="text-neutral-600 dark:text-neutral-400 mb-3 sm:mb-4 text-sm sm:text-base">
+                <p className="text-brand-content mb-3 sm:mb-4 text-sm sm:text-base">
                   {product.description}
                 </p>
                 <div className="flex justify-between items-center">
                   <div className="flex items-center">
                     <i className="fas fa-star text-accent-500 mr-1 text-sm sm:text-base"></i>
-                    <span className="text-xs sm:text-sm text-neutral-600 dark:text-neutral-400">
+                    <span className="text-xs sm:text-sm text-brand-content">
                       {product.rating} ({product.reviews})
                     </span>
                   </div>
@@ -150,8 +150,8 @@ const Products = () => {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-xs sm:text-sm bg-gradient-to-r from-brand-pink-500 to-brand-pink-600 text-white px-3 sm:px-4 py-1.5 sm:py-2 rounded-full font-semibold hover:shadow transition inline-block text-center"
-                  >
-                    Receta
+                  > <i className="fas fa-shopping-cart mr-2"></i>
+                    Añadir al Carrito
                   </a>
                 </div>
               </div>

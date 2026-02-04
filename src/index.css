@@ -9,11 +9,11 @@
   --color-brand-titulo-logo:#000000; /*black white*/
   --color-brand-subtitles-2:#ec4899;/*brand pink 500 bg white*/
   --color-brand-ckeck:#ec4899;
-  --color-brand-box:#ffffff;
+  --color-brand-box:#ffffff;/*white bg dark gray */
   --color-brand-ckeck-2:#fbcfe8; /*brand pink 200 white*/
   --color-brand-box-2:#f5f5f5; /*bg neutral 50 bg neutral 700*/
   --color-brand-ckeck-3:#fce7f3; /*brand pink 100 white*/
-  
+  --color-brand-border:#cac8c9;
 
   /* Fondos y Gradientes */
   --bg-section: linear-gradient(135deg, #fdf2f8 0%, #fce7f3 50%, #fafafa 100%);
@@ -36,6 +36,7 @@
   --color-brand-ckeck-2:#302f2f; 
   --color-brand-box-2:#404040;
   --color-brand-ckeck-3:#831843;
+  --color-brand-border:#525252;
   
   --bg-section: linear-gradient(135deg, #1a1a1a 0%, #262626 50%, #404040 100%);
   --bg-section-2: linear-gradient(135deg, #292727 0%, #312f2f 50%, #404040 100%);
@@ -44,7 +45,6 @@
   --bg-pink-box: #262626;
 }
 
-/* 2. CONFIGURACIÓN DEL TEMA DE TAILWIND */
 @theme {
   /* Mapeo de variables dinámicas para usar como clases de Tailwind */
   --color-brand-content: var(--color-brand-content);
@@ -57,6 +57,7 @@
   --color-brand-ckeck-2: var(--color-brand-ckeck-2);
   --color-brand-box-2: var(--color-brand-box-2);
   --color-brand-ckeck-3: var(--color-brand-ckeck-3);
+  --color-brand-border: var(--color-brand-border);
 
   /* Paleta rosa fija */
   --color-brand-pink-50: #fdf2f8;
