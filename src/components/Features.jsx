@@ -18,7 +18,7 @@ const Features = () => {
   ];
 
   return (
-    <section className="py-12 sm:py-16 section-gradient-3">
+    <section className="py-12 sm:py-16 section-gradient-4">
       <div className="container mx-auto px-4 sm:px-6">
         <h2 className="text-2xl sm:text-3xl font-bold text-center text-brand-titulo-logo mb-8 sm:mb-12">
           ¿Por Qué Elegirnos?

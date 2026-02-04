@@ -298,3 +298,65 @@ export const eliminarImagenCloudinary = async (publicId) => {
     return { success: false, message: error.message };
   }
 };
+// ========== FUNCIONES CRUD DE CLIENTES ==========
+// Función para guardar datos del cliente en Firestore
+export const guardarCliente = async (datosCliente) => {
+  try {
+    const clientesCollection = collection(db, 'clientes');
+    
+    const clienteData = {
+      nombre: datosCliente.nombre.trim(),
+      email: datosCliente.email.trim(),
+      telefono: datosCliente.telefono || '',
+      mensaje: datosCliente.mensaje.trim(),
+      fechaContacto: new Date().toISOString(),
+      fechaRegistro: new Date().toISOString(),
+      interes: datosCliente.interes || 'general',
+      atendido: false
+    };
+
+    const docRef = await addDoc(clientesCollection, clienteData);
+    
+    return {
+      success: true,
+      id: docRef.id,
+      message: 'Cliente guardado exitosamente'
+    };
+    
+  } catch (error) {
+    console.error('Error guardando cliente:', error);
+    return {
+      success: false,
+      message: error.message
+    };
+  }
+};
+
+// Función para obtener todos los clientes
+export const obtenerClientes = async () => {
+  try {
+    const clientesCollection = collection(db, 'clientes');
+    const q = query(clientesCollection, orderBy('fechaRegistro', 'desc'));
+    const querySnapshot = await getDocs(q);
+    
+    const clientes = [];
+    querySnapshot.forEach((doc) => {
+      clientes.push({
+        id: doc.id,
+        ...doc.data()
+      });
+    });
+    
+    return {
+      success: true,
+      clientes: clientes
+    };
+    
+  } catch (error) {
+    return {
+      success: false,
+      message: error.message,
+      clientes: []
+    };
+  }
+};

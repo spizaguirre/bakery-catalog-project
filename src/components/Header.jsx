@@ -19,7 +19,7 @@ const Header = () => {
   };
 
   return (
-    <header className="section-gradient-2 shadow-sm sticky top-0 z-40 border-b border-neutral-200 dark:border-neutral-700">
+    <header className="section-gradient-2 shadow-sm sticky top-0 z-40 border-b border-brand-border">
       <div className="container mx-auto px-4 py-3 flex justify-between items-center">
         {/* Logo y nombre */}
         <div className="flex items-center space-x-3 flex-shrink-0">
